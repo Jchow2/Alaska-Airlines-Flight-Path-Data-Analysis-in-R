@@ -1,0 +1,213 @@
+---
+title: "43finalproject_table"
+author: "Justin Chow"
+date: "3/10/2021"
+output: html_document
+---
+
+This is my final project for Econ 43
+
+```{r setup, echo=FALSE, message=F, warning=F}
+# Clear the working space
+rm(list = ls())
+
+# Set working directory
+setwd("~/SCU_Winter2021/Econ 43/Econ 43_2.11.21/mydata")
+
+library(readxl)
+library(dplyr)
+library(psych)
+library(stargazer)
+
+```
+
+
+```{r data, echo=FALSE, warning=FALSE, message=FALSE}
+
+# Set working directory
+setwd("~/SCU_Winter2021/Econ 43/Econ 43_2.11.21/mydata")
+
+# Load 10 randomly assigned Major Airports for Alaska Airlines
+library(readxl)
+library(psych)
+
+den <- readxl::read_excel("DEN.xls.xlsx",
+                          col_names = c("Year", "Month", "Domestic", "International", "Total"), 
+                          skip = 2)
+den$origin <- "DEN"
+
+bwi <- readxl::read_excel("BWI.xls.xlsx", 
+                          col_names = c("Year", "Month", "Domestic", "International", "Total"), 
+                          skip = 2)
+bwi$origin <- "BWI"
+
+dtw <- readxl::read_excel("DTW.xls.xlsx", 
+                          col_names = c("Year", "Month", "Domestic", "International", "Total"), 
+                          skip = 2)
+dtw$origin <- "DTW"
+
+slc <- readxl::read_excel("SLC.xls.xlsx", 
+                          col_names = c("Year", "Month", "Domestic", "International", "Total"), 
+                          skip = 2)
+slc$origin <- "SLC"
+
+pdx <- readxl::read_excel("PDX.xls.xlsx", 
+                          col_names = c("Year", "Month", "Domestic", "International", "Total"), 
+                          skip = 2)
+pdx$origin <- "PDX"
+
+phl <- readxl::read_excel("PHL.xls.xlsx", 
+                          col_names = c("Year", "Month", "Domestic", "International", "Total"), 
+                          skip = 2)
+phl$origin <- "PHL"
+
+mco <- readxl::read_excel("MCO.xls.xlsx", 
+                          col_names = c("Year", "Month", "Domestic", "International", "Total"), 
+                          skip = 2)
+mco$origin <- "MCO"
+
+msp <- readxl::read_excel("MSP.xls.xlsx", 
+                          col_names = c("Year", "Month", "Domestic", "International", "Total"), 
+                          skip = 2)
+msp$origin <- "MSP"
+
+iah <- readxl::read_excel("IAH.xls.xlsx", 
+                          col_names = c("Year", "Month", "Domestic", "International", "Total"), 
+                          skip = 2)
+iah$origin <- "IAH"
+
+hnl <- readxl::read_excel("HNL.xls.xlsx", 
+                          col_names = c("Year", "Month", "Domestic", "International", "Total"), 
+                          skip = 2)
+hnl$origin <- "HNL"
+
+# Bind 10 randomly assigned airports into one variable
+major <- rbind(bwi,den,dtw,hnl,iah,mco,msp,pdx,phl,slc)
+
+```
+
+Airports Used in Our Analysis
+We randomly selected 10 major airports that Alaska Airlines flies to within the United States. These airports include Portland, Salt Lake City, Honolulu, Denver, Houston, Orlando, Minneapolis, Detroit, Baltimore, and Philadelphia. Alaska Airlines is headquartered in Seattle, Washington so there is considerably more travel to and from Portland than any other airport due to its proximity to Seattle. Because of this, we elected to omit Portland from the majority of our analysis as it significantly skewed the data. Alaska already has a prominent presence at PDX, so we decided to focus on flight demand for our other chosen airports.
+
+```{r data2, echo=FALSE, warning=FALSE, message=FALSE}
+
+# Set working directory
+setwd("~/SCU_Winter2021/Econ 43/Econ 43_2.11.21/mydata")
+
+# Total number of Flights and Passengers for Alaska Airlines
+library(readxl)
+flights <- readxl::read_excel("FLIGHTS.xls.xlsx", 
+                              col_names = c("Year", "Month", "Domestic", "International", "Total"), 
+                              skip = 2)
+
+passengers <- readxl::read_excel("PASSENGERS.xls.xlsx", 
+                                 col_names = c("Year", "Month", "Domestic", "International", "Total"), 
+                                 skip = 2)
+
+```
+
+The Data
+Our data source contains data on 14 U.S. and foreign airline companies as well as several airports within the United States. The dataset contains information on several variables including passenger count, flights, net income, operating revenue and more during the time period of October 2002 to November 2020. There is data on each of these variables separated by month as well as domestic or international flights. We downloaded data for Alaska Airlines on 10 major airports.
+
+```{r clean, echo=FALSE, message=F, warning=F}
+
+# covert everything to lower case
+names(major) <- tolower(names(major))
+View(major)
+
+# drop missing values in Domestic flights in the major airport dataset 
+major <- major %>% filter(!is.na(domestic))
+
+subset1 <- subset(major, year >= 2017 & origin != "PDX" & month != "TOTAL")
+View(subset1)
+
+```
+
+Data Cleaning
+In order to utilize the major dataset, our first task was to remove missing values from the domestic flight variable. To drop missing values in the dataset, we use the “filter (!is.na(domestic))” command and find cases where the condition of NA is true and those evaluated as NA are dropped. For the purpose of this analysis, we also used the subset () command to drop the month column’s “Total” value, omit Portland airport from the dataset, and filter years to after 2017. 
+
+```{r stat, echo=FALSE, message=F, warning=F}
+
+### Measure of Variability 
+quantile(major$domestic, probs = c(0.25, 0.75), na.rm = TRUE)
+IQR(major$domestic, na.rm = TRUE)
+var(major$domestic)
+skew(major$domestic)
+kurtosi(major$domestic)
+summary(major$domestic)
+
+```
+
+Measure of Variability 
+Measuring our data “domestic” flights, we can see the range of flights spanning the middle half of the major dataset. First, we used the quartile () command to see the 25th (lower) and 75th (upper) quartile, which shows the number of flights of 8,261 and 103,928those two percentiles. Then we can calculate the interquartile range (IQR) using the IQR () command, which helped us see the difference in the number of flights near the middle of the dataset to be 95,667. To measure how the data values are dispersed around the mean, we calculate a high variance for domestic flights, which indicates that the data points are very spread out from the mean. We can determine whether domestic flights is affected by skewedness by using the skew () function. Since the mean of the data set is much larger than the meadian, we can conclude that the data values are right- or positively-skewed. Finally, we summarized all measures for a single variable, “domestic” flights, by using the summary () command to see the minimum, 1st quartile, median, mean, 3rd quartile, and maximum number of flights printed at once. This is an easier way to compute some measures of central tendency and check our measures of variability.
+
+```{r table, echo=FALSE, message=F, warning=F, comment=" "}
+
+# covert everything to lower case
+names(major) <- tolower(names(major))
+View(major)
+
+### Descriptive Statistics
+stargazer(subset(as.data.frame(subset1), year >= 2017 & origin != "PDX" & month != "TOTAL"), type="text", median = TRUE, digits = 1, title="Descriptive Statistics for Alaska Airlines passengers to Major Airports")
+
+```
+
+Descriptive Statistics 
+By using the subset command to omit the month column’s “Total” value, omit Portland airport, and filter years after 2017, we are able to find measures of variability (mean, std dev, min, 25th pctl, median, 75th pctl, max and more within the conditions we have previous set in our analysis. This will result in the domestic flights having a lower measures for every measure, the most notable being the mean drastically decreasing by about 180,000 flights and median flgihts decreasing by 4,000. Since Alaska Airlines headquarters are located in Seattle, Washington, it makes sense that the majority of their demand for domestic flights would arrive to its nearest destination of Portland, Oregon. By filtering Portland's major airport as well as only taking into account flights after 2017, we can see that demand for domestic air travel has greatly decreased compared to years prior. 
+
+
+```{r reg, echo=FALSE, message=F, warning=F, comment=" "}
+
+# Create log flights for major dataset
+subset1$lnpassengers <- log(subset1$domestic)
+
+# Linear Model
+myModal <- lm(lnpassengers ~ year + origin, data=subset1)
+
+stargazer(myModal,
+          title="Regression", type="text",
+          df=FALSE, digits=3)
+
+```
+
+Linear Model
+Interpretation of regression models
+
+Year on Domestic Flights (Log-Linear)
+Formal: year2018 and year2019 is positively associated with log domestic at a 1% significance level. year2020 is negatively associated with log domestic at a 1% significance level.   
+Soft version: If year increases by one, domestic flights increases. However, beyond year 2020, when year increases by one, domestic flights decreases.
+Overall: Year is a strong factor that helps explain domestic flights
+
+Origin Airport on Domestic Flights (Log-Linear)
+Formal: Denver, Dallas/Fort Worth, Honolulu Daniel K Inouye, and Orlando International Airports are positively associated with domestic flights. Houstin Geroge Bush Intercontinental, Minneapolis-St Paul, Philadelphia, and Salt Lake City International are negatively associated with domestic flights at 1% significance level.    
+Soft Version: If flights destinations are to originDEN, originDTW, originHNL, and originMCO, domestic flights increase. If flight destinations are originIAH, originMSP, originPHL, and originSLC, domestic flights decrease.
+Overall: Origin is a strong factor that helps explain domestic flights.
+
+Summary of myModel
+1. Model fit is good (R2 > 80%)
+2. Year is positively associated with domestic flights. 
+3. Origin as either storng posititve or negative associated with flights.   
+4. Both year and origin are statistically significant at 1% level. 
+
+```{r variance, echo=FALSE, message=F, warning=F, comment=" "}
+
+# Analysis of Variance (ANOVA)
+myANOVA <- aov(lnpassengers ~ year*origin, data=subset1)
+summary(myANOVA)
+
+```
+
+Two-Way ANOVA
+
+1. Interpretation: There is a meaningful year difference in number of flights. 
+Soft Version: An F-statistic value of 147 and p-value less than 0.05 means our sample data provides sufficient evidence to conclude that the regression models fits the data better a model with no independent variabels.
+Overall: year on flights is a good fit
+
+2. Interpretation: There is a meaningful origin difference in number of flights.
+Soft Version: An F-statistic value of 416 and p-value less than 0.05 means our sample data provides sufficient evidence to conclude that the regression models fits the data better a model with no independent variabels.
+Overall: origin on flights is a good fit.
+
+3. Interpreation: There is a meaningful difference interaction between year and origin in number of flights 
+Soft Version: An F-statistic value of 4.127 and p-value less than 0.05 means our sample data provides sufficient evidence to conclude that the regression models fits the data better a model with no independent variabels.
+Overall: interaction of year and origin on flights is a good fit. 
+
