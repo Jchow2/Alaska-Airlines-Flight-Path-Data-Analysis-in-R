@@ -1,10 +1,8 @@
-# Alaska-Airlines-Flight-Path-Data-Analysis-in-R
-
-# Abstract
+## Abstract
 In this project, we analyze airline and airport data over 18 years in order to identify and understand flight path demand trends, before the pandemic and during the pandemic. After conducting thorough analysis using several R functions, we have recommended strategic business decisions for Alaska Airlines based on airport growth during and before the pandemic.
 
-# Motivation
+## Motivation
 The United States Department of Transportation’s Bureau of Labor Statistics has expansive public data on airlines, airports, flight paths and passenger numbers. Conducting thorough analysis on this data can provide airlines with insights which can be used to make strategic business decisions. Our objective was to take flight path data on 9 major airports and use several R functions to clean, analyze, and visualize the data. We focused on Alaska Airlines, the 16th largest airline by market capitalization, as they are a healthy company with potential for growth. We will form strategic recommendations to optimize Alaska Airlines’ flight paths in order to maximize profit and increase market share of flights at airports showing signs of growth.
 
-# Data
+## Data
 The dataset used for this project was taken from the United States Department of Transportation’s Bureau of Transportation Statistics. It contains data on 14 U.S. and foreign airline companies as well as several airports within the United States. The dataset contains information on several variables from October 2002 to November 2020. The variables include passengers, flights, net income, operating revenue and more. There is data on each of these variables separated by month as well as domestic or international flights. We randomly selected 10 major airports that Alaska Airlines flies to within the United States and downloaded the passenger and flight data for each. The airports included were in Portland, Salt Lake City, Honolulu, Denver, Houston, Orlando, Minneapolis, Detroit, Baltimore, and Philadelphia. Alaska Airlines is headquartered in Seattle, Washington so there is considerably more travel to and from Portland than any other airport due to its proximity to Seattle. Because of this, we elected to omit Portland from the majority of our analysis as it significantly skewed the data. Alaska already has a prominent presence at PDX, so we decided to focus on flight demand for the other airports.
