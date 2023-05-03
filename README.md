@@ -1,7 +1,6 @@
-# Impact of COVID-19 Pandemic on Airline Industry
-In this group project, our team analyzed airline and airport data from the US Bureau of Transportation Statistics to identify flight path demand trends before and during the COVID-19 pandemic. Our analysis took flight path data from nine major airports including Portland, Salt Lake City, Honolulu, Denver, Houston, Orlando, Minneapolis, Detroit, Baltimore, and Philadelphia. Our team focused on Alaska Airlines and collected data of each of their flights to these destinations from October 2002 to November 2020. We included variables like passengers, type of flights, net income per flight, operating revenue from each flight, and more. Our team conducted a throuogh statistical and quantitative analysis using several R functions to discover the demand for flight paths.
+# Airline Flight Path Demand
 
-To evaluate the relationship between number of passengers and year of flight, I was tasked with using descriptive statistics, regression analysis, and ANOVA. Our team found that Alaska Airlines did not reduce the number of flights proportional to the decrease in passengers, and that the demand for domestic flights using Alaska Airlines had greatly decreased. Comparing the year and the origin of individual passengers, we can see that both had a high chance of variability. Using these findings and visualizing all of our data, our team was able to create three actionable recommendations to optimize Alaska Airlines flight paths, maximizing profits and increasing market share. 
+The United States Department of Transportation’s Bureau of Labor Statistics has expansive public data on airlines, airports, flight paths, and passenger numbers. Conducting a thorough analysis of this data can provide airlines with insights that can be used to make strategic business decisions.
 
 # Data
-United States Bureau of Transportation Statistics (see code above)
+Transtats - United States Bureau of Transportation Statistics: https://www.transtats.bts.gov/
