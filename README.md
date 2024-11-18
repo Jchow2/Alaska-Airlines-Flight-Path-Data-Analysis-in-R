@@ -11,7 +11,6 @@ A data-driven project exploring how the COVID-19 pandemic impacted airline fligh
 - [Installation](#installation)
 - [Usage](#usage)
 - [Results](#results)
-- [Contributing](#contributing)
 - [License](#license)
 
 ---
