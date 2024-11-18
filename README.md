@@ -64,25 +64,28 @@ source("airline-covid.R")
 ### 1. Exploratory Data Analysis
 
 Perform an exploratory analysis of the dataset to generate summary statistics and visualizations.
-Run the eda_airline_flight_demand.R script:
 
+# Run exploratory analysis script
 source("eda_airline_flight_demand.R")
+
 This script outputs key metrics, trends, and visual summaries of the dataset, helping you understand passenger demand patterns.
 
 ### 2. Predict Future Demand
 
 Estimate future trends in passenger demand using predictive models.
-Run the airline_predict_passenger_demand.R script:
 
+# Run predictive modeling script
 source("airline_predict_passenger_demand.R")
+
 This script uses time-series forecasting models to predict passenger trends for upcoming months based on historical data.
 
 ### 3. Interactive Dashboard
 
 Explore the results interactively through a Shiny application.
-Run the shiny_app.R script:
 
+# Launch the Shiny dashboard
 shiny::runApp("shiny_app.R")
+
 The dashboard provides a user-friendly interface to view predictions, analyze trends, and customize inputs for demand forecasting.
 
 ## Results
