@@ -54,11 +54,11 @@ Transtats - United States Bureau of Transportation Statistics: https://www.trans
 ## Install Required R Packages
 ```r
 install.packages(c("tidyverse", "lubridate", "forecast", "ggplot2", "shiny"))
-
+```
 ## Open the R project file and Load Script
  ```r
 source("airline-covid.R")
-
+```
 ## Usage
 
 ### 1. Exploratory Data Analysis
