@@ -52,11 +52,11 @@ To run this project locally, follow these steps:
 Transtats - United States Bureau of Transportation Statistics: https://www.transtats.bts.gov/
 
 ## Install Required R Packages
- ```bash
+```r
 install.packages(c("tidyverse", "lubridate", "forecast", "ggplot2", "shiny"))
 
 ## Open the R project file and Load Script
- ```bash
+ ```r
 source("airline-covid.R")
 
 ## Usage
